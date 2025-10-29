@@ -1,0 +1,40 @@
+<div class="login-container">
+  <div class="login-card">
+    <h2>Connexion Cabinet Médical</h2>
+
+    <form (ngSubmit)="login()" novalidate>
+      <div class="form-group">
+        <label for="username">Nom d'utilisateur</label>
+        <input
+          id="username"
+          type="text"
+          name="username"
+          [(ngModel)]="credentials.username"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <div class="password-wrapper">
+          <input
+            id="password"
+            [type]="passwordVisible ? 'text' : 'password'"
+            name="password"
+            [(ngModel)]="credentials.password"
+            required
+          />
+          <button type="button" (click)="togglePasswordVisibility()" aria-label="Afficher/Masquer le mot de passe">
+            {{ passwordVisible ? '🙈' : '👁️' }}
+          </button>
+        </div>
+      </div>
+
+      <div class="error-message" *ngIf="error">{{ error }}</div>
+
+      <button type="submit" [disabled]="loading">
+        {{ loading ? 'Connexion en cours...' : 'Se connecter' }}
+      </button>
+    </form>
+  </div>
+</div>

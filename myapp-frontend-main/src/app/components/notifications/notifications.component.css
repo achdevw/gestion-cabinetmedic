@@ -1,0 +1,14 @@
+.notification-container {
+  padding: 1rem;
+}
+.unread {
+  background-color: #e6f7ff;
+  border-left: 3px solid #1890ff;
+}
+li {
+  margin-bottom: 10px;
+  padding: 10px;
+  list-style: none;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}

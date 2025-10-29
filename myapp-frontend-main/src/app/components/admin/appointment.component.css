@@ -1,0 +1,255 @@
+/* Base Styles */
+:host {
+  display: block;
+  font-family: 'Roboto', 'Arial', sans-serif;
+  background-color: #ffffff; /* White background for cleanliness */
+}
+
+/* Container */
+section {
+  max-width: 1200px; /* Matches nav-container max-width */
+  margin: 2rem auto;
+  padding: 0 2rem; /* Matches nav padding */
+}
+
+/* Heading */
+h2 {
+  text-align: center;
+  color: #2d6a4f; /* Dark green to match navbar */
+  margin-bottom: 2rem;
+  font-size: 2rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Navigation Bar (Provided CSS) */
+.admin-nav {
+  background-color: #2d6a4f; /* Dark green */
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links li {
+  margin: 0;
+}
+
+.nav-links a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: 500;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.nav-links a:hover,
+.nav-links a.active {
+  background-color: #4caf50; /* Bright green for hover/active */
+  color: #ffffff;
+}
+
+.logout {
+  background-color: #d32f2f; /* Red for logout */
+}
+
+.logout:hover {
+  background-color: #c62828; /* Darker red for hover */
+}
+
+/* Table Styling */
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background-color: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Matches navbar shadow */
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+th, td {
+  padding: 1rem 1.25rem;
+  text-align: left;
+  font-size: 1rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+th {
+  background-color: #2d6a4f; /* Dark green to match navbar */
+  color: #ffffff;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+td {
+  color: #1f2937; /* Dark gray for text */
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:nth-child(even) {
+  background-color: #f8fafc; /* Light gray for alternating rows */
+}
+
+tr:hover {
+  background-color: #e6f4ea; /* Light green hover to complement navbar */
+  transition: background-color 0.2s ease;
+}
+
+select {
+  padding: 0.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px; /* Matches navbar link border-radius */
+  background-color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease; /* Matches navbar transition */
+  width: 100%;
+  max-width: 160px;
+}
+
+select:focus {
+  outline: none;
+  border-color: #4caf50; /* Green to match navbar hover/active */
+  box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+}
+
+select option {
+  background-color: #ffffff;
+  color: #1f2937;
+}
+
+/* Loading and Error States */
+div[ngIf="isLoading"],
+div[ngIf="error"],
+p {
+  text-align: center;
+  font-size: 1.2rem;
+  margin: 2rem 0;
+}
+
+div[ngIf="isLoading"] {
+  color: #6b7280; /* Neutral gray */
+  font-weight: 500;
+}
+
+div[ngIf="error"] {
+  color: #d32f2f; /* Red to match logout */
+  background-color: #fef2f2;
+  padding: 1rem;
+  border-radius: 4px; /* Matches navbar link border-radius */
+  border: 1px solid #d32f2f;
+}
+
+p {
+  color: #6b7280; /* Neutral gray */
+  font-weight: 500;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  table {
+    font-size: 0.95rem;
+  }
+
+  th, td {
+    padding: 0.8rem 1rem;
+  }
+
+  select {
+    max-width: 140px;
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-container {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.75rem 1rem;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .nav-links a {
+    padding: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  th, td {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.9rem;
+  }
+
+  select {
+    max-width: 120px;
+  }
+
+  h2 {
+    font-size: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .nav-container {
+    padding: 0.5rem 0.75rem;
+  }
+
+  .nav-title {
+    font-size: 1.3rem;
+  }
+
+  .nav-links a {
+    padding: 0.4rem;
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    padding: 0.5rem 0.6rem;
+    font-size: 0.85rem;
+  }
+
+  select {
+    max-width: 100px;
+    padding: 0.4rem;
+  }
+}

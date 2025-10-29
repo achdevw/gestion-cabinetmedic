@@ -1,0 +1,136 @@
+<!-- Navigation Bar -->
+<nav class="admin-nav" role="navigation" aria-label="Navigation administrateur">
+  <div class="nav-container">
+    <h1 class="nav-title">Cabinet Médical – Patient</h1>
+    <ul class="nav-links">
+      <li><a routerLink="/patient" routerLinkActive="active" aria-current="page">Accueil</a></li>
+      <li><a routerLink="/appointments" routerLinkActive="active">Mes Rendez-vous</a></li>
+      <li><a routerLink="/login" class="logout" routerLinkActive="active">Déconnexion</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Appointment Container -->
+<div class="appointment-container">
+  <h2 class="page-title">Mes Rendez-vous</h2>
+
+  <!-- Prendre un rendez-vous -->
+  <section class="appointment-section" role="region" aria-label="Prendre un rendez-vous">
+    <h3 class="section-title">Prendre un rendez-vous</h3>
+    <div class="table-container">
+      <table *ngIf="doctors.length > 0; else noDoctors" class="appointment-table" role="grid">
+        <thead>
+          <tr>
+            <th scope="col">Médecin</th>
+            <th scope="col">Spécialité</th>
+            <th scope="col">Date</th>
+            <th scope="col">Motif</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let doc of doctors; trackBy: trackByDoctorId">
+            <td data-label="Médecin">{{ doc.user.first_name }} {{ doc.user.last_name }}</td>
+            <td data-label="Spécialité">{{ doc.specialite }}</td>
+            <td data-label="Date">
+              <label class="visually-hidden" [attr.for]="'date-' + doc.id">
+                Date du rendez-vous pour {{ doc.user.first_name }}
+              </label>
+              <input
+                [id]="'date-' + doc.id"
+                type="datetime-local"
+                class="form-input"
+                [(ngModel)]="appointmentData[doc.id].date_heure"
+                placeholder="Choisir la date et l'heure"
+                title="Date et heure du rendez-vous"
+                aria-required="true"
+              />
+            </td>
+            <td data-label="Motif">
+              <label class="visually-hidden" [attr.for]="'motif-' + doc.id">
+                Motif du rendez-vous pour {{ doc.user.first_name }}
+              </label>
+              <input
+                [id]="'motif-' + doc.id"
+                type="text"
+                class="form-input"
+                [(ngModel)]="appointmentData[doc.id].motif"
+                placeholder="Ex : Consultation, contrôle..."
+                title="Motif du rendez-vous"
+                aria-required="true"
+              />
+            </td>
+            <td data-label="Action">
+              <button
+                (click)="bookAppointment(doc.id)"
+                class="btn btn-primary"
+                [attr.aria-label]="'Réserver un rendez-vous avec ' + doc.user.first_name"
+              >
+                Réserver
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noDoctors>
+        <p class="no-data" role="alert" aria-live="polite">Aucun médecin disponible.</p>
+      </ng-template>
+    </div>
+  </section>
+
+  <!-- Rendez-vous existants -->
+  <section class="appointment-section" role="region" aria-label="Rendez-vous existants">
+    <h3 class="section-title">Rendez-vous existants</h3>
+    <div class="table-container">
+      <table *ngIf="appointments.length > 0; else noAppointments" class="appointment-table" role="grid">
+        <thead>
+          <tr>
+            <th scope="col">Médecin</th>
+            <th scope="col">Date</th>
+            <th scope="col">Statut</th>
+            <th scope="col">Motif</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let appt of appointments; trackBy: trackByAppointmentId"
+            [class.pending]="appt.statut === 'en_attente'"
+            [class.confirmed]="appt.statut === 'confirme'"
+          >
+            <td data-label="Médecin">{{ appt.medecin.user.first_name }} {{ appt.medecin.user.last_name }}</td>
+            <td data-label="Date">{{ appt.date_heure | date: 'short' }}</td>
+            <td data-label="Statut">
+              <span
+                class="status-badge"
+                [ngClass]="{
+                  'badge-waiting': appt.statut === 'en_attente',
+                  'badge-confirmed': appt.statut === 'confirme',
+                  'badge-cancelled': appt.statut === 'annule'
+                }"
+              >
+                {{ appt.statut }}
+              </span>
+            </td>
+            <td data-label="Motif">{{ appt.motif }}</td>
+            <td data-label="Action">
+              <button
+                *ngIf="appt.statut === 'en_attente'"
+                (click)="cancelAppointment(appt.id)"
+                class="btn btn-danger"
+                [attr.aria-label]="'Annuler le rendez-vous avec ' + appt.medecin.user.first_name"
+              >
+                Annuler
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <ng-template #noAppointments>
+        <p class="no-data" role="alert" aria-live="polite">Aucun rendez-vous trouvé.</p>
+      </ng-template>
+    </div>
+  </section>
+</div>

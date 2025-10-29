@@ -1,0 +1,65 @@
+<!-- Navigation Bar -->
+<nav class="admin-nav" role="navigation" aria-label="Navigation administrateur">
+  <div class="nav-container">
+    <h1 class="nav-title">Cabinet Médical – Admin</h1>
+    <ul class="nav-links">
+      <li><a routerLink="/admin" routerLinkActive="active" aria-current="page">Dashboard</a></li>
+      <li><a routerLink="/admin/patients" routerLinkActive="active">Patients</a></li>
+      <li><a routerLink="/appointments" routerLinkActive="active">Rendez-vous</a></li>
+      <li><a routerLink="/medicalrecords" routerLinkActive="active">Rapports</a></li>
+      <li><a routerLink="/admin/settings" routerLinkActive="active">Paramètres</a></li>
+      <li><a routerLink="/login" class="logout" routerLinkActive="active">Déconnexion</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Appointment List -->
+<section role="region" aria-label="Liste des rendez-vous">
+  <h2>Liste des Rendez-vous</h2>
+
+  <div *ngIf="isLoading" role="alert" aria-live="polite">Chargement...</div>
+  <div *ngIf="error" role="alert" aria-live="assertive">{{ error }}</div>
+
+  <table *ngIf="!isLoading && appointments.length > 0; else noAppointments" role="grid">
+    <thead>
+      <tr>
+        <th scope="col">Date/Heure</th>
+        <th scope="col">Patient</th>
+        <th scope="col">Médecin</th>
+        <th scope="col">Motif</th>
+        <th scope="col">Statut</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let appt of appointments; trackBy: trackById">
+        <td>{{ appt.date_heure | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ appt.patient?.user?.first_name }} {{ appt.patient?.user?.last_name }}</td>
+        <td>{{ appt.medecin?.user?.first_name }} {{ appt.medecin?.user?.last_name }}</td>
+        <td>{{ appt.motif }}</td>
+        <td>
+          <select
+            [ngModel]="appt.statut"
+            (ngModelChange)="updateStatut(appt.id, $event)"
+            name="statut-{{ appt.id }}"
+            [attr.aria-label]="'Statut du rendez-vous pour ' + appt.patient?.user?.first_name"
+          >
+            <option *ngFor="let opt of statutOptions" [value]="opt.value">{{ opt.label }}</option>
+          </select>
+        </td>
+        <td>
+          <button (click)="notifyPatient(appt)" aria-label="Notifier le patient">
+            📩 Patient
+          </button>
+          <button (click)="notifyMedecin(appt)" aria-label="Notifier le médecin">
+            🩺 Médecin
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #noAppointments>
+    <p role="alert" aria-live="polite">Aucun rendez-vous trouvé.</p>
+  </ng-template>
+</section>

@@ -1,0 +1,53 @@
+<!-- Navigation Bar -->
+<nav class="admin-nav" role="navigation" aria-label="Navigation administrateur">
+  <div class="nav-container">
+    <h1 class="nav-title">Cabinet Médical – Admin</h1>
+    <ul class="nav-links">
+      <li><a routerLink="/admin" routerLinkActive="active" aria-current="page">Dashboard</a></li>
+      <li><a routerLink="/admin/patients" routerLinkActive="active">Patients</a></li>
+      <li><a routerLink="/appointments" routerLinkActive="active">Rendez-vous</a></li>
+      <li><a routerLink="/medicalrecords" routerLinkActive="active">Rapports médicaux</a></li>
+      <li><a routerLink="/admin/settings" routerLinkActive="active">Paramètres</a></li>
+      <li><a routerLink="/login" class="logout" routerLinkActive="active">Déconnexion</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Appointment Container -->
+<section class="appointment-container" role="region" aria-label="Rendez-vous à venir">
+  <h2 class="page-title">Rendez-vous à venir</h2>
+
+  <div *ngIf="isLoading" class="loading" role="alert" aria-live="polite">Chargement...</div>
+  <div *ngIf="error" class="error" role="alert" aria-live="assertive">{{ error }}</div>
+
+  <div class="table-container">
+    <table *ngIf="appointments.length > 0; else noAppointments" class="appointment-table" role="grid">
+      <thead>
+        <tr>
+          <th scope="col">Patient</th>
+          <th scope="col">Date/Heure</th>
+          <th scope="col">Motif</th>
+          <th scope="col">Statut</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let rdv of appointments; trackBy: trackById" [class.pending]="rdv.statut === 'en_attente'" [class.confirmed]="rdv.statut === 'confirmé'">
+          <td data-label="Patient">{{ rdv.patient_name }}</td>
+          <td data-label="Date/Heure">{{ rdv.date_heure | date:'dd/MM/yyyy HH:mm' }}</td>
+          <td data-label="Motif">{{ rdv.motif }}</td>
+          <td data-label="Statut">
+            <span class="status-badge">{{ rdv.statut }}</span>
+          </td>
+          <td data-label="Actions">
+            <button *ngIf="rdv.statut === 'en_attente'" (click)="cancelAppointment(rdv.id)" class="btn btn-danger" [attr.aria-label]="'Annuler le rendez-vous pour ' + rdv.patient_name">Annuler</button>
+            <button (click)="viewDetails(rdv.id)" class="btn btn-primary" [attr.aria-label]="'Voir les détails du rendez-vous pour ' + rdv.patient_name">Détails</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <ng-template #noAppointments>
+      <p class="no-data" role="alert" aria-live="polite">Aucun rendez-vous à venir.</p>
+    </ng-template>
+  </div>
+</section>
