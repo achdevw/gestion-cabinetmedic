@@ -37,27 +37,8 @@ Ce projet est une application web complète pour la gestion d'un cabinet médica
    ```bash
    git clone https://github.com/nom-utilisateur/gestion-cabinet-medical.git
    Installez les dépendances Backend (Django) :
-Créez un environnement virtuel et activez-le :
-python -m venv venv
+2. Créez un environnement virtuel et activez-le :
+    ```bash
+ python -m venv venv
 source venv/bin/activate  # Sur Windows : venv\Scripts\activate
-Installez les dépendances :
-pip install -r backend/requirements.txt
-Installez les dépendances Frontend (Angular) :
-Accédez au dossier Angular :
-cd frontend
-Installez les dépendances :
-npm install
-Lancez le backend Django :
-python manage.py runserver
-Lancez le frontend Angular :
-ng serve
-Contribuer
-Fork ce dépôt.
-Créez une branche pour votre fonctionnalité ou correction de bug :
-git checkout -b ma-nouvelle-fonctionnalite
-Effectuez vos modifications, puis committez-les :
-git commit -m "Ajout de la fonctionnalité X"
-Poussez vos modifications :
-git push origin ma-nouvelle-fonctionnalite
-Ouvrez une pull request.
 
