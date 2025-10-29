@@ -36,7 +36,6 @@ Ce projet est une application web complète pour la gestion d'un cabinet médica
 1. Clonez ce dépôt :
    ```bash
    git clone https://github.com/nom-utilisateur/gestion-cabinet-medical.git
-   Installez les dépendances Backend (Django) :
 2. Créez un environnement virtuel et activez-le :
    ```bash
    python -m venv venv
